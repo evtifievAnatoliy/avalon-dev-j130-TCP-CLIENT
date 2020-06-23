@@ -18,15 +18,16 @@ import java.util.logging.Logger;
 
 
 public class ClientThread extends Thread{
-    private Socket clientSock;
-    private String clientHostPost;
+    
     private MainForm mainForm;
     
-        
-    public ClientThread(Socket clientSock, MainForm mainForm){
+    boolean isNewMessage = false;
+    
+    
+    public ClientThread(MainForm mainForm){
         super();
-        this.clientSock = clientSock;
         this.mainForm = mainForm;
+        run();
         
     }
 
@@ -36,43 +37,30 @@ public class ClientThread extends Thread{
         
         try (Socket socket = new Socket(InetAddress.getLocalHost(), 7_020)){
             try (ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
-                        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream()); 
-                        Scanner sc = new Scanner(System.in)){
+                        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())){
+                mainForm.setLogs("Server: " + socket.getInetAddress() + ":" + socket.getPort() + " connected.");
                   
                 while(true){
-                    System.out.printf("Enter a line: ");
-                    String line = sc.nextLine();
-                    oos.writeObject(line);
-                  
-                    Object[] o = (Object[]) ois.readObject();
-                    System.out.println(o[0]);
-                    System.out.println(o[1]);
-                    System.out.println();
+                    if(isNewMessage){
+                        
+                        oos.writeObject("Hello");
+                        isNewMessage = false;
+                        
+                        Object[] o = (Object[]) ois.readObject();
+                        mainForm.setLogs(o[0].toString());
+                        mainForm.setLogs(o[1].toString());
+                        
+                    }
                 }
               }
         } catch (Exception ex) {
-                
+                mainForm.setLogs(ex.getMessage());
         }
         
-        /*
-        
-        clientHostPost = String.format("%s,%s", clientSock.getInetAddress(), clientSock.getPort());
-        mainForm.setLogs(clientHostPost + " connected.");
-        try(ObjectOutputStream oos = new ObjectOutputStream(clientSock.getOutputStream());
-                ObjectInputStream ois = new ObjectInputStream(clientSock.getInputStream())){
-            while(true){
-                String line = (String) ois.readObject();
-                Date d = new Date();
-                mainForm.setLogs(clientHostPost + ", " +  line + ", " + d);
-                   
-                oos.writeObject(new Object[]{line, d});
-            }
-        } catch (Exception ex) {
-                
-        }
-            mainForm.setLogs(clientHostPost + " disconnected.");
-            */
-        }
+    }
 
+    public void setIsNewMessage(boolean isNewMessage) {
+        this.isNewMessage = isNewMessage;
+    }
    
 }

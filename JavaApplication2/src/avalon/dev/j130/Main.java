@@ -25,24 +25,7 @@ public class Main{
         MainForm mainForm = new MainForm();
         
         
-        /*
-        try (Socket socket = new Socket(InetAddress.getLocalHost(), 7_020)){
-            try (ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
-                        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream()); 
-                        Scanner sc = new Scanner(System.in)){
-                  
-                while(true){
-                    System.out.printf("Enter a line: ");
-                    String line = sc.nextLine();
-                    oos.writeObject(line);
-                  
-                    Object[] o = (Object[]) ois.readObject();
-                    System.out.println(o[0]);
-                    System.out.println(o[1]);
-                    System.out.println();
-                }
-              }
-        }*/
+        
     }
 }
 

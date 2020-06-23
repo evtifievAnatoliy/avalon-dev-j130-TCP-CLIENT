@@ -31,6 +31,7 @@ public class MainForm extends JFrame{
     private JButton exbtn;
     
     private String userName;
+    ClientThread clientThread;
     
     public MainForm() throws IOException {
         
@@ -51,7 +52,7 @@ public class MainForm extends JFrame{
         
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        message = new JTextField(58);
+        message = new JTextField(50);
         JLabel lbl = new JLabel(userName + ": ");
         lbl.setLabelFor(message);
         jPanel.add(lbl);
@@ -60,7 +61,7 @@ public class MainForm extends JFrame{
         sentbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                clientThread.isNewMessage = true;
             }
         });
         jPanel.add(sentbtn);
@@ -87,6 +88,7 @@ public class MainForm extends JFrame{
         
         setVisible(true);
         
+        clientThread = new ClientThread(this);
         
     }
     
