@@ -30,8 +30,9 @@ public class MainForm extends JFrame{
     private JTextArea logs;
     private JButton exbtn;
     
+    private String messageStr;
     private String userName;
-    ClientThread clientThread;
+    private boolean isNewMessage = false;
     
     public MainForm() throws IOException {
         
@@ -61,7 +62,9 @@ public class MainForm extends JFrame{
         sentbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clientThread.isNewMessage = true;
+                messageStr = message.getText();
+                isNewMessage = true;
+                
             }
         });
         jPanel.add(sentbtn);
@@ -88,9 +91,13 @@ public class MainForm extends JFrame{
         
         setVisible(true);
         
-        clientThread = new ClientThread(this);
-        
     }
+
+    public boolean isIsNewMessage() {
+        return isNewMessage;
+    }
+    
+    
     
     public void setLogs(String string) {
         SwingUtilities.invokeLater(()->{
@@ -99,6 +106,19 @@ public class MainForm extends JFrame{
             });
         
     }
+
+    public void setIsNewMessage(boolean isNewMessage) {
+        this.isNewMessage = isNewMessage;
+    }
+
+    public String getMessage() {
+        return messageStr;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+    
     
     
     

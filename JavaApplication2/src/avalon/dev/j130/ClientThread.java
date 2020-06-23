@@ -21,13 +21,13 @@ public class ClientThread extends Thread{
     
     private MainForm mainForm;
     
-    boolean isNewMessage = false;
+    Socket socket;
+    
     
     
     public ClientThread(MainForm mainForm){
         super();
         this.mainForm = mainForm;
-        run();
         
     }
 
@@ -41,16 +41,21 @@ public class ClientThread extends Thread{
                 mainForm.setLogs("Server: " + socket.getInetAddress() + ":" + socket.getPort() + " connected.");
                   
                 while(true){
-                    if(isNewMessage){
-                        
-                        oos.writeObject("Hello");
-                        isNewMessage = false;
+                    sleep(1);
+                    /*synchronized(this){
+                        wait();
+                    }*/
+                    if(mainForm.isIsNewMessage()){
+                        String message = mainForm.getUserName() + ": " + mainForm.getMessage();
+                        oos.writeObject(message);
+                        mainForm.setIsNewMessage(false);
                         
                         Object[] o = (Object[]) ois.readObject();
-                        mainForm.setLogs(o[0].toString());
-                        mainForm.setLogs(o[1].toString());
+                        mainForm.setLogs(o[1].toString() + "   " + o[0].toString());
                         
                     }
+                    
+                    
                 }
               }
         } catch (Exception ex) {
@@ -58,9 +63,4 @@ public class ClientThread extends Thread{
         }
         
     }
-
-    public void setIsNewMessage(boolean isNewMessage) {
-        this.isNewMessage = isNewMessage;
-    }
-   
 }

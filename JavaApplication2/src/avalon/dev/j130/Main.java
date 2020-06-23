@@ -19,11 +19,13 @@ import java.util.Scanner;
  */
 public class Main{
     
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         
         
         MainForm mainForm = new MainForm();
-        
+        ClientThread clientThread = new ClientThread(mainForm);
+        clientThread.start();
+        clientThread.join();
         
         
     }
