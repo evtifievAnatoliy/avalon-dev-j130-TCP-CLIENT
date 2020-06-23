@@ -30,9 +30,10 @@ public class MainForm extends JFrame{
     private JTextArea logs;
     private JButton exbtn;
     
-    private String messageStr;
     private String userName;
-    private boolean isNewMessage = false;
+    
+    
+    ClientController clientController;
     
     public MainForm() throws IOException {
         
@@ -47,6 +48,7 @@ public class MainForm extends JFrame{
                 }
                 else{
                     System.exit(0);
+                    clientController.closeConnections();
                 }
         
         Container c = getContentPane();
@@ -58,12 +60,12 @@ public class MainForm extends JFrame{
         lbl.setLabelFor(message);
         jPanel.add(lbl);
         jPanel.add(message);
-        sentbtn = new JButton("Sent");
+        sentbtn = new JButton("Send");
         sentbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                messageStr = message.getText();
-                isNewMessage = true;
+                clientController.setNewMessage(userName + ": " + message.getText());
+                message.setText("");
                 
             }
         });
@@ -91,12 +93,10 @@ public class MainForm extends JFrame{
         
         setVisible(true);
         
+        clientController = new ClientController(this, userName);
+        
     }
 
-    public boolean isIsNewMessage() {
-        return isNewMessage;
-    }
-    
     
     
     public void setLogs(String string) {
@@ -107,17 +107,6 @@ public class MainForm extends JFrame{
         
     }
 
-    public void setIsNewMessage(boolean isNewMessage) {
-        this.isNewMessage = isNewMessage;
-    }
-
-    public String getMessage() {
-        return messageStr;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
     
     
     

@@ -23,9 +23,7 @@ public class Main{
         
         
         MainForm mainForm = new MainForm();
-        ClientThread clientThread = new ClientThread(mainForm);
-        clientThread.start();
-        clientThread.join();
+        
         
         
     }
