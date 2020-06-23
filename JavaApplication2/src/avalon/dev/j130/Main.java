@@ -20,6 +20,12 @@ import java.util.Scanner;
 public class Main{
     
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+        
+        
+        MainForm mainForm = new MainForm();
+        
+        
+        /*
         try (Socket socket = new Socket(InetAddress.getLocalHost(), 7_020)){
             try (ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
                         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream()); 
@@ -36,7 +42,7 @@ public class Main{
                     System.out.println();
                 }
               }
-        }
+        }*/
     }
 }
 
