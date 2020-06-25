@@ -6,16 +6,19 @@
 package avalon.dev.j130;
 
 import java.io.IOException;
-
 /**
  *
  * @author eag
  */
 public class Main{
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        
+        
+        MainForm mainForm = new MainForm();
+        
+        
         
     }
-    
 }
 
