@@ -11,6 +11,9 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -35,7 +38,7 @@ public class MainForm extends JFrame{
     
     ClientController clientController;
     
-    public MainForm() throws IOException {
+    public MainForm() throws IOException, UnknownHostException, InterruptedException{
         
         super("TCP-Client");
         setBounds(300, 200, 800, 800);
@@ -47,8 +50,9 @@ public class MainForm extends JFrame{
                     userName = authorizationModalDialog.getUserName();
                 }
                 else{
-                    System.exit(0);
-                    clientController.closeConnections();
+                    
+                    exitProgram();
+                    
                 }
         
         Container c = getContentPane();
@@ -85,7 +89,8 @@ public class MainForm extends JFrame{
         exbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                
+                exitProgram();
             }
         });
         jPanel.add(exbtn);
@@ -106,7 +111,17 @@ public class MainForm extends JFrame{
             });
         
     }
-
+    
+    public void exitProgram(){
+        try{
+            clientController.closeConnections();
+        }
+        catch (Exception ex){
+        }
+        finally{
+            System.exit(0);
+        }
+    }
     
     
     

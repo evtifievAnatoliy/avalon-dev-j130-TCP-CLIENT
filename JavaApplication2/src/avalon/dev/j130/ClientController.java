@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.monitor.Monitor;
 
 
 public class ClientController {
@@ -27,13 +28,15 @@ public class ClientController {
     SendMessage sendMessage;
     ReadMessage readMessage;
     
+        
     String clientName;
     String newMessage = null;
     
     
-    public ClientController(MainForm mainForm, String clientName) throws UnknownHostException, IOException{
+    public ClientController(MainForm mainForm, String clientName) throws UnknownHostException, IOException, InterruptedException{
         this.mainForm = mainForm;
         
+        try{
         socket = new Socket(InetAddress.getLocalHost(), 7_020);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
@@ -41,42 +44,14 @@ public class ClientController {
             
             sendMessage = new SendMessage(socket, oos);
             sendMessage.start();
-            //sendMessage.join();
+            //sendMessage.join(); ???
             
             readMessage = new ReadMessage(socket, ois, mainForm);
             readMessage.start();
-                        
-            
-            
-            
-            
-            /*
-            try (ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
-                        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())){
-                mainForm.setLogs("Server: " + socket.getInetAddress() + ":" + socket.getPort() + " connected.");
-                  
-                while(true){
-                    sleep(1);
-                    //synchronized(this){
-                    //    wait();
-                    //}
-                    if(mainForm.isIsNewMessage()){
-                        String message = mainForm.getUserName() + ": " + mainForm.getMessage();
-                        oos.writeObject(message);
-                        mainForm.setIsNewMessage(false);
-                        
-                        Object[] o = (Object[]) ois.readObject();
-                        mainForm.setLogs(o[1].toString() + "   " + o[0].toString());
-                        
-                    }
-                    
-                    
-                }
-              }*/
-        
-        //catch (Exception ex) {
-        //        mainForm.setLogs(ex.getMessage());
-        //}
+        }
+        catch (Exception ex){
+            mainForm.setLogs("Connection with server Error!!! " + "Please close your program!!!");
+        }
         
     }
 
@@ -92,8 +67,6 @@ public class ClientController {
         return newMessage;
     }
 
-    
-    
     public void closeConnections() throws IOException {
         this.oos.close();
         this.ois.close();

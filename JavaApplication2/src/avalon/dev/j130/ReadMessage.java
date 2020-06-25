@@ -7,6 +7,8 @@ package avalon.dev.j130;
 
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +18,7 @@ public class ReadMessage extends Thread{
     Socket socket;
     ObjectInputStream ois;
     MainForm mainForm;
-
+    
     
     public ReadMessage(Socket socket, ObjectInputStream ois, MainForm mainForm) {
         super();
@@ -31,9 +33,6 @@ public class ReadMessage extends Thread{
             int i=0;                      
             while(true){
                 sleep(1000);
-                /*synchronized(this){
-                    wait();
-                }*/
                 System.out.println("Thread Read " + i);
                 Object[] o = (Object[]) ois.readObject();
                 System.out.println("Thread Read !!! " + o.toString());
@@ -41,8 +40,9 @@ public class ReadMessage extends Thread{
                 i++;
             }
         } catch (Exception ex) {
-           System.out.println(ex.getMessage());
-                
+           mainForm.setLogs("Thread Read Error: " + ex.getMessage() + " Please close your program!!!");
+           
+           
         } //To change body of generated methods, choose Tools | Templates.
     }
     
