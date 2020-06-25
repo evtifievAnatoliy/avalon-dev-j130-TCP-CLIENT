@@ -5,14 +5,7 @@
  */
 package avalon.dev.j130;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.Scanner;
-
 /**
  *
  * @author eag

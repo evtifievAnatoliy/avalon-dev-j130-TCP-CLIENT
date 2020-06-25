@@ -11,11 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.management.monitor.Monitor;
+
 
 
 public class ClientController {
@@ -38,15 +34,14 @@ public class ClientController {
         
         try{
         socket = new Socket(InetAddress.getLocalHost(), 7_020);
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream oos = null;// = new ObjectOutputStream(socket.getOutputStream()); 
+            ObjectInputStream ois = null; //new ObjectInputStream(socket.getInputStream());
             mainForm.setLogs("Server: " + socket.getInetAddress() + ":" + socket.getPort() + " connected.");
             
-            sendMessage = new SendMessage(socket, oos);
+            sendMessage = new SendMessage(socket);
             sendMessage.start();
-            //sendMessage.join(); ???
-            
-            readMessage = new ReadMessage(socket, ois, mainForm);
+                        
+            readMessage = new ReadMessage(socket, mainForm);
             readMessage.start();
         }
         catch (Exception ex){
@@ -67,9 +62,7 @@ public class ClientController {
         return newMessage;
     }
 
-    public void closeConnections() throws IOException {
-        this.oos.close();
-        this.ois.close();
+    public void closeConnection() throws IOException {
         this.socket.close();
     }
     

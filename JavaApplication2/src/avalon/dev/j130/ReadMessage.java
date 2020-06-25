@@ -7,8 +7,7 @@ package avalon.dev.j130;
 
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -16,23 +15,21 @@ import java.util.logging.Logger;
  */
 public class ReadMessage extends Thread{
     Socket socket;
-    ObjectInputStream ois;
     MainForm mainForm;
     
     
-    public ReadMessage(Socket socket, ObjectInputStream ois, MainForm mainForm) {
+    public ReadMessage(Socket socket, MainForm mainForm) {
         super();
         this.socket = socket;
-        this.ois = ois;
         this.mainForm = mainForm;
     }
 
     @Override
     public void run() {
-        try {
+        try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
             int i=0;                      
             while(true){
-                sleep(1000);
+                //sleep(1000);
                 System.out.println("Thread Read " + i);
                 Object[] o = (Object[]) ois.readObject();
                 System.out.println("Thread Read !!! " + o.toString());

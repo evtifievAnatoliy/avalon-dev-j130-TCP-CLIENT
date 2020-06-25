@@ -5,37 +5,26 @@
  */
 package avalon.dev.j130;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import static java.lang.Thread.sleep;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author eag
- */
+
 public class SendMessage extends Thread{
     Socket socket;
     String newMessage;
-    ObjectOutputStream oos;
     Object monitor = new Object();
 
-    public SendMessage(Socket socket, ObjectOutputStream oos) {
+    public SendMessage(Socket socket) {
         super();
         this.socket = socket;
-        this.oos = oos;
     }
 
     @Override
     public void run() {
-        try {
+        try (ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())){
             int i=0;                      
             while(true){
-                sleep(1000);
+                //sleep(500);
                 
                 System.out.println("Thread Send " + i + ":" + newMessage);
                 if(newMessage != null){
