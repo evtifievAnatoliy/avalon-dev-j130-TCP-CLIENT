@@ -14,8 +14,8 @@ import java.net.Socket;
  * @author eag
  */
 public class ReadMessage extends Thread{
-    Socket socket;
-    MainForm mainForm;
+    private Socket socket;
+    private MainForm mainForm;
     
     
     public ReadMessage(Socket socket, MainForm mainForm) {

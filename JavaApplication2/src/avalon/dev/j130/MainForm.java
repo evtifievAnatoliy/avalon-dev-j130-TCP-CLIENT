@@ -33,7 +33,7 @@ public class MainForm extends JFrame{
     private String userName;
     
     
-    ClientController clientController;
+    private ClientController clientController;
     
     public MainForm() throws IOException, UnknownHostException, InterruptedException{
         

@@ -18,15 +18,15 @@ public class ClientController {
     
     private MainForm mainForm;
     
-    Socket socket;
-    ObjectOutputStream oos;
-    ObjectInputStream ois;
-    SendMessage sendMessage;
-    ReadMessage readMessage;
+    private Socket socket;
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
+    private SendMessage sendMessage;
+    private ReadMessage readMessage;
     
         
-    String clientName;
-    String newMessage = null;
+    private String clientName;
+    private String newMessage = null;
     
     
     public ClientController(MainForm mainForm, String clientName) throws UnknownHostException, IOException, InterruptedException{

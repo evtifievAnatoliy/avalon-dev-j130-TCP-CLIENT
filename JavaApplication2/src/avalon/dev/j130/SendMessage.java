@@ -10,9 +10,9 @@ import java.net.Socket;
 
 
 public class SendMessage extends Thread{
-    Socket socket;
-    String newMessage;
-    Object monitor = new Object();
+    private Socket socket;
+    private String newMessage;
+    private Object monitor = new Object();
 
     public SendMessage(Socket socket) {
         super();
